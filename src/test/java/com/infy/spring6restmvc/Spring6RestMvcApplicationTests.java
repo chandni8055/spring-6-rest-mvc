@@ -15,7 +15,7 @@ class Spring6RestMvcApplicationTests {
 
 	@Test
 	void contextLoads() {
-		System.out.println(beerController.getBeerById(UUID.randomUUID()));
+
 	}
 
 }
