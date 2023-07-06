@@ -1,12 +1,15 @@
 package com.infy.spring6restmvc.controller;
 
 import com.infy.spring6restmvc.model.BeerDTO;
+import com.infy.spring6restmvc.model.BeerStyle;
 import com.infy.spring6restmvc.service.BeerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,7 +44,7 @@ public class BeerController {
 
     }
     @PutMapping(BEER_PATH_ID)
-    public ResponseEntity updateById(@PathVariable("beerId")UUID beerId, @RequestBody BeerDTO beerDTO){
+    public ResponseEntity updateById(@PathVariable("beerId")UUID beerId,@Validated @RequestBody BeerDTO beerDTO){
 
         if( beerService.updateBeerById(beerId, beerDTO).isEmpty()){
             throw new NotFoundException();
@@ -52,7 +55,7 @@ public class BeerController {
 
 
     @PostMapping(BEER_PATH)
-    public ResponseEntity handlePost(@RequestBody BeerDTO beerDTO){
+    public ResponseEntity handlePost(@Validated @RequestBody BeerDTO beerDTO){
         BeerDTO savedBeerDTO = beerService.savedNewBeer(beerDTO);
 
         HttpHeaders headers = new HttpHeaders();
@@ -61,8 +64,12 @@ public class BeerController {
     }
 
     @GetMapping(value = BEER_PATH)
-    public List<BeerDTO> listBeers(){
-        return beerService.listBeers();
+    public Page<BeerDTO> listBeers(@RequestParam(required = false) String beerName,
+                                   @RequestParam(required = false) BeerStyle beerStyle,
+                                   @RequestParam(required = false) Boolean showInventory,
+                                   @RequestParam(required = false)Integer pageNumber,
+                                   @RequestParam(required = false)Integer pageSize){
+        return beerService.listBeers(beerName, beerStyle, showInventory,pageNumber, pageSize);
     }
 
 
