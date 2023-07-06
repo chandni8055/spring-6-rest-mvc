@@ -79,7 +79,7 @@ class BeerControllerIT {
                         .queryParam("showInventory", "true")
                         .queryParam("pageSize", "800"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content.size()", is(310)))
+                .andExpect(jsonPath("$.content.size()", is(320)))
                 .andExpect(jsonPath("$.content[0].quantityOnHand").value(IsNull.notNullValue()));
     }
 
