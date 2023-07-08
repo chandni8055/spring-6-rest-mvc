@@ -2,6 +2,7 @@ package com.infy.spring6restmvc.repositories;
 
 import com.infy.spring6restmvc.entities.Beer;
 import com.infy.spring6restmvc.entities.BeerOrder;
+import com.infy.spring6restmvc.entities.BeerOrderShipment;
 import com.infy.spring6restmvc.entities.Customer;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,6 +41,9 @@ class BeerOrderRepositoryTest {
         BeerOrder beerOrder = BeerOrder.builder()
                 .customerRef("Test order")
                 .customer(testCustomer)
+                .beerOrderShipment(BeerOrderShipment.builder()
+                        .trackingNumber("1235r")
+                        .build())
                 .build();
 
         BeerOrder savedBeerOrder = beerOrderRepository.save(beerOrder);
@@ -47,5 +51,4 @@ class BeerOrderRepositoryTest {
 
         System.out.println(savedBeerOrder.getCustomerRef());
     }
-
 }
